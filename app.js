@@ -38,10 +38,7 @@ const CONNECTION_URL = "mongodb://localhost:27017/Storeapp";
 const mongoDB = process.env.MONGODB_URI || CONNECTION_URL;
 mongoose.connect(mongoDB);
 
-mongoose.set("useNewUrlParser", true);
-mongoose.set("useFindAndModify", false);
-mongoose.set("useCreateIndex", true);
-mongoose.set("useUnifiedTopology", true);
+
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
