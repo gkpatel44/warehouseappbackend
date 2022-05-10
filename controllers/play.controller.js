@@ -3,11 +3,19 @@ const Play = require("../models/play.model");
 const redis = require('redis');
 const client = redis.createClient();
 
+client.on('connect', function () {
+  console.log('Connected to Redis');
+});
+
+client.on("error", function (err) {
+  console.log("Error " + err);
+});
+
 function getRandomString(length) {
   var randomChars = '0123456789';
   var result = '';
-  for ( var i = 0; i < length; i++ ) {
-      result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
+  for (var i = 0; i < length; i++) {
+    result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
   }
   return result;
 }
@@ -33,10 +41,10 @@ exports.add_bat = (req, res) => {
     } else {
       // console.log(data);
       res.status(200).send(data);
-    let key = getRandomString(4);
-     const a = client.setex(key, 150 ,JSON.stringify(data));
-      
-      setInterval( () => {
+      let key = getRandomString(4);
+      const a = client.setex(key, 150, JSON.stringify(data));
+
+      setInterval(() => {
         client.get(key, (err, value) => {
           if (err) {
             throw err;
@@ -45,7 +53,7 @@ exports.add_bat = (req, res) => {
             console.log('value:', value);
           }
           else {
-            console.log('expired:',value);
+            console.log('expired:', value);
             process.exit();
           }
         });
@@ -58,7 +66,7 @@ exports.add_bat = (req, res) => {
 exports.win_bat = async (req, res) => {
   try {
     let no = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    
+
     let no1 = [];
     for (let i = 0; i < no.length; i++) {
       const a = Play.find({ number: no[i] });
@@ -70,14 +78,14 @@ exports.win_bat = async (req, res) => {
       no1.push(data1);
     }
     // console.log("no1",no1);
-    
+
     var lowest = Number.POSITIVE_INFINITY;
     var tmp;
     for (var i = no1.length - 1; i >= 0; i--) {
       tmp = no1[i].count;
       if (tmp < lowest) lowest = no1[i];
     }
-    console.log("lowest",lowest);
+    console.log("lowest", lowest);
     return res.status(200).send(lowest);
   } catch (error) {
     console.log(error);
