@@ -34,8 +34,9 @@ apps.use((req, res, next) => {
   next();
 });
 
-const CONNECTION_URL = "mongodb://localhost:27017/Storeapp";
+const CONNECTION_URL = process.env.MONGODB_URI;
 const mongoDB = process.env.MONGODB_URI || CONNECTION_URL;
+
 mongoose.connect(mongoDB);
 
 
