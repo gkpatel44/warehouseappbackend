@@ -46,6 +46,9 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 apps.use(express.json());
 apps.use(express.urlencoded({ extended: true }));
+apps.get("/", (req, res) => {
+  res.send("welcome to app****")
+})
 apps.use("/auth", auth);
 
 apps.use("/app", app);
