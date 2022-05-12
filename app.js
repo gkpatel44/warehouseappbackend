@@ -2,11 +2,20 @@ const mongoose = require("mongoose").set("debug", true);
 const express = require("express");
 const apps = express();
 require("dotenv").config();
+const cors = require('cors')
 const bodyParser = require("body-parser");
 const auth = require("./routes/user.route");
 const store = require("./routes/store.route");
 const product = require("./routes/product.route");
 const categories = require("./routes/categories.route");
+
+/*
+git add .
+git commit -m""
+git push heroku master
+heroku open
+heroku logs
+*/
 
 const app = require("./routes/transaction_types.route");
 const wallet = require("./routes/wallet_history.route");
@@ -22,21 +31,22 @@ var upload = multer();
 
 apps.use(upload.array());
 apps.use(express.static("public"));
+apps.use(cors());
 
-apps.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Credentials", true);
-  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin,X-Requested-With,Content-Type,Accept,content-type,application/json"
-  );
-  res.header(
-    "Cache-Control",
-    "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0"
-  );
-  next();
-});
+// apps.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Credentials", true);
+//   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin,X-Requested-With,Content-Type,Accept,content-type,application/json"
+//   );
+//   res.header(
+//     "Cache-Control",
+//     "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0"
+//   );
+//   next();
+// });
 
 const CONNECTION_URL = process.env.MONGODB_URI;
 const mongoDB = process.env.MONGODB_URI || CONNECTION_URL;
