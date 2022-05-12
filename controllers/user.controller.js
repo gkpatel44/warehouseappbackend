@@ -45,7 +45,7 @@ exports.signup = async (req, res, next) => {
                 email: data.email,
               };
               const token = jwt.sign(fortoken, "secretkey");
-               res
+              res
                 .status(200)
                 .json({ message: "SignUp Successful", token: token });
               console.log(data);
@@ -85,7 +85,7 @@ exports.login = async (req, res) => {
       const token = jwt.sign(data, "secretkey");
       return res
         .status(200)
-        .json({ message: "Login Successful", token: token });
+        .json({ message: "Login Successful", token: token, user: user });
     } else {
       console.log({ error: "Invalid Password" });
       res.status(400).json({ error: "Invalid Password" });
@@ -150,7 +150,7 @@ exports.forgot_password = async (req, res) => {
       }
     );
     res.status(200).send(Otp);
-    console.log("otp:",Otp);
+    console.log("otp:", Otp);
   } else {
     return res.status(400).send({ error: "user not found" });
   }
@@ -176,25 +176,25 @@ exports.verify_otp = async (req, res) => {
   }
 };
 
-exports.reset_password = async (req,res) => {
+exports.reset_password = async (req, res) => {
   let auth = ({
-    new_password:req.body.new_password,
-    confirm_password:req.body.confirm_password
+    new_password: req.body.new_password,
+    confirm_password: req.body.confirm_password
   })
 
   // if (!(auth.new_password && auth.confirm_password)) {
   //   return res.status(400).send({ error: "Please enter all values" });
   // }
-  
+
   if (auth.new_password !== auth.confirm_password) {
-   return res.status(400).send({ error: "check both password are not equal" });
-} else {
-   const salt = await bcrypt.genSalt(9);
+    return res.status(400).send({ error: "check both password are not equal" });
+  } else {
+    const salt = await bcrypt.genSalt(9);
     const b = await bcrypt.hash(auth.confirm_password, salt);
-  const a = await Auth.findByIdAndUpdate(req.userDetails.user_id,{password:b})
-  res.status(200).send("your password updated");
-  console.log(a);
-}
+    const a = await Auth.findByIdAndUpdate(req.userDetails.user_id, { password: b })
+    res.status(200).send("your password updated");
+    console.log(a);
+  }
 
 }
 
