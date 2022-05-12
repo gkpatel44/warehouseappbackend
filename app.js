@@ -4,6 +4,10 @@ const apps = express();
 require("dotenv").config();
 const bodyParser = require("body-parser");
 const auth = require("./routes/user.route");
+const store = require("./routes/store.route");
+const product = require("./routes/product.route");
+const categories = require("./routes/categories.route");
+
 const app = require("./routes/transaction_types.route");
 const wallet = require("./routes/wallet_history.route");
 const play = require("./routes/play.route");
@@ -50,6 +54,9 @@ apps.get("/", (req, res) => {
   res.send("welcome to app****")
 })
 apps.use("/auth", auth);
+apps.use("/store", store);
+apps.use("/product", product);
+apps.use("/categories", categories)
 
 apps.use("/app", app);
 apps.use("/wallet", wallet);

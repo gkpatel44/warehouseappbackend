@@ -5,8 +5,12 @@ let AuthSchema = new Schema({
   phone: { type: Number, required: true },
   email: { type: String, required: true },
   name: { type: String },
-  otp: {type: Number},
+  otp: { type: Number },
   password: { type: String, required: true },
+  status: { type: String },
+  statusMsg: { type: String },
+  storeID: { type: String },
+  role: { type: String }
 });
 
 //Export the model
