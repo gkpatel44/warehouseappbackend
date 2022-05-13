@@ -19,6 +19,12 @@ exports.signup = async (req, res, next) => {
         phone: req.body.phone,
         email: req.body.email,
         password: req.body.password,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        status: req.body.status,
+        statusMsg: req.body.statusMsg,
+        storeId: req.body.storeId,
+        role: req.body.role
       });
 
       if (!(auth.phone && auth.email && auth.password)) {
@@ -67,6 +73,14 @@ exports.login = async (req, res) => {
   let auth = new Auth({
     email: req.body.email,
     password: req.body.password,
+    name: req.body.name,
+    phone: req.body.phone,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    status: req.body.status,
+    statusMsg: req.body.statusMsg,
+    storeId: req.body.storeId,
+    role: req.body.role
   });
 
   if (!(auth.email && auth.password)) {
@@ -82,7 +96,13 @@ exports.login = async (req, res) => {
         user_id: user._id,
         email: user.email,
         name: user.name,
-        phone: user.phone
+        phone: user.phone,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        status: user.status,
+        statusMsg: user.statusMsg,
+        storeId: user.storeId,
+        role: user.role
       };
       const token = jwt.sign(data, "secretkey");
       return res
@@ -98,35 +118,35 @@ exports.login = async (req, res) => {
   }
 };
 
-exports.otpsend = (req, res) => {
-  let phone = req.body.phone;
+// exports.otpsend = (req, res) => {
+//   let phone = req.body.phone;
 
-  if (!phone) {
-    return res.status(400).send({ error: "Please enter all values" });
-  }
-  sendOtp.send(phone, "1234", (error, data) => {
-    if (error) {
-      res.send(error);
-    } else {
-      res.send(data);
-    }
-  });
-};
+//   if (!phone) {
+//     return res.status(400).send({ error: "Please enter all values" });
+//   }
+//   sendOtp.send(phone, "1234", (error, data) => {
+//     if (error) {
+//       res.send(error);
+//     } else {
+//       res.send(data);
+//     }
+//   });
+// };
 
-exports.resend_otp = (req, res) => {
-  let phone = req.body.phone;
+// exports.resend_otp = (req, res) => {
+//   let phone = req.body.phone;
 
-  if (!phone) {
-    return res.status(400).send({ error: "Please enter all values" });
-  }
-  sendOtp.retry(phone, false, (error, data) => {
-    if (error) {
-      res.send(error);
-    } else {
-      res.send(data);
-    }
-  });
-};
+//   if (!phone) {
+//     return res.status(400).send({ error: "Please enter all values" });
+//   }
+//   sendOtp.retry(phone, false, (error, data) => {
+//     if (error) {
+//       res.send(error);
+//     } else {
+//       res.send(data);
+//     }
+//   });
+// };
 
 exports.forgot_password = async (req, res) => {
   let auth = new Auth({
@@ -159,24 +179,24 @@ exports.forgot_password = async (req, res) => {
 
 };
 
-exports.verify_otp = async (req, res) => {
-  let auth = new Auth({
-    phone: req.body.phone,
-    otp: req.body.otp,
-  });
+// exports.verify_otp = async (req, res) => {
+//   let auth = new Auth({
+//     phone: req.body.phone,
+//     otp: req.body.otp,
+//   });
 
-  if (!(auth.phone && auth.otp)) {
-    return res.status(400).send({ error: "Please enter all values" });
-  }
+//   if (!(auth.phone && auth.otp)) {
+//     return res.status(400).send({ error: "Please enter all values" });
+//   }
 
-  const a = await Auth.findOne({ phone: auth.phone, otp: auth.otp });
-  if (a) {
-    res.status(200).send("verification success");
-    console.log("verification success");
-  } else {
-    return res.status(400).send({ error: "verification fail" });
-  }
-};
+//   const a = await Auth.findOne({ phone: auth.phone, otp: auth.otp });
+//   if (a) {
+//     res.status(200).send("verification success");
+//     console.log("verification success");
+//   } else {
+//     return res.status(400).send({ error: "verification fail" });
+//   }
+// };
 
 exports.reset_password = async (req, res) => {
   let auth = ({
