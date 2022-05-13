@@ -9,7 +9,7 @@ let AuthSchema = new Schema({
   name: { type: String },
   // otp: { type: Number },
   password: { type: String, required: true },
-  status: { type: String },
+  status: { type: Boolean },
   statusMsg: { type: String },
   storeId: { type: String },
   role: { type: String }
