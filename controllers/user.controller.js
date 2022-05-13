@@ -65,15 +65,15 @@ exports.signup = async (req, res, next) => {
 
 exports.login = async (req, res) => {
   let auth = new Auth({
-    phone: req.body.phone,
+    email: req.body.email,
     password: req.body.password,
   });
 
-  if (!(auth.phone && auth.password)) {
+  if (!(auth.email && auth.password)) {
     return res.status(400).send({ error: "Please enter all values" });
   }
 
-  const user = await Auth.findOne({ phone: auth.phone });
+  const user = await Auth.findOne({ email: auth.email });
   if (user) {
     // check user password with hashed password stored in the database
     const validPassword = await bcrypt.compare(auth.password, user.password);
@@ -81,11 +81,13 @@ exports.login = async (req, res) => {
       let data = {
         user_id: user._id,
         email: user.email,
+        name: user.name,
+        phone: user.phone
       };
       const token = jwt.sign(data, "secretkey");
       return res
         .status(200)
-        .json({ message: "Login Successful", token: token, user: user });
+        .json({ message: "Login Successful", token: token });
     } else {
       console.log({ error: "Invalid Password" });
       res.status(400).json({ error: "Invalid Password" });
