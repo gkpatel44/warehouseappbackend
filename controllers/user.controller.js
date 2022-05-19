@@ -268,7 +268,20 @@ exports.change_userDetails = async (req, res) => {
   console.log(req.body);
   Auth.findOneAndUpdate({ _id: userId }, { $set: req.body }, { useFindAndModify: false }, (err, data) => {
     if (data) {
-      return res.status(200).json({ message: "Updated Successful", data: data });
+      let datas = {
+        user_id: data._id,
+        email: data.email,
+        phone: data.phone,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        status: data.status,
+        statusMsg: data.statusMsg,
+        storeId: data.storeId,
+        role: data.role
+      };
+      const token = jwt.sign(datas, "secretkey");
+
+      return res.status(200).json({ message: "Updated Successful", token: token });
     } else {
       console.log("err", err);
       return res.status(500).send(err);
