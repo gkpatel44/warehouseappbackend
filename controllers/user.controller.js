@@ -260,7 +260,7 @@ exports.change_password = async (req, res) => {
 };
 
 exports.change_userDetails = async (req, res) => {
-  let userId = req.userDetails._id;
+  let userId = req.userDetails.user_id;
   if (Object.keys(req.body).length === 0) {
     return res.status(400).send({ error: "Please enter atleast one values" });
   }
