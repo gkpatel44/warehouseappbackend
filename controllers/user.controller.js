@@ -73,7 +73,6 @@ exports.login = async (req, res) => {
   let auth = new Auth({
     email: req.body.email,
     password: req.body.password,
-    name: req.body.name,
     phone: req.body.phone,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -95,7 +94,6 @@ exports.login = async (req, res) => {
       let data = {
         user_id: user._id,
         email: user.email,
-        name: user.name,
         phone: user.phone,
         firstName: user.firstName,
         lastName: user.lastName,
@@ -260,3 +258,23 @@ exports.change_password = async (req, res) => {
     return res.status(400).send({ error: "old password is wrong" });
   }
 };
+
+exports.change_userDetails = async (req, res) => {
+  let userId = req.userDetails._id;
+  if (Object.keys(req.body).length === 0) {
+    return res.status(400).send({ error: "Please enter atleast one values" });
+  }
+
+  console.log(req.body);
+  Auth.findOneAndUpdate({ _id: userId }, { $set: req.body }, { useFindAndModify: false }, (err, data) => {
+    if (data) {
+      return res.status(200).json({ message: "Updated Successful", data: data });
+    } else {
+      console.log("err", err);
+      return res.status(500).send(err);
+    }
+
+  })
+}
+
+

@@ -6,12 +6,12 @@ let AuthSchema = new Schema({
   lastName: { type: String, required: true },
   phone: { type: Number, required: true },
   email: { type: String, required: true },
-  name: { type: String },
+  // name: { type: String },
   // otp: { type: Number },
   password: { type: String, required: true },
   status: { type: Boolean },
   statusMsg: { type: String },
-  storeId: { type: String },
+  storeId: { type: String, default: "0" },
   role: { type: String }
 });
 
