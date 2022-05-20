@@ -9,12 +9,15 @@ let AuthSchema = new Schema({
   // name: { type: String },
   // otp: { type: Number },
   password: { type: String, required: true },
-  status: { type: Boolean },
+  status: { type: Boolean, default: true },
   statusMsg: { type: String },
   storeId: { type: String, default: "0" },
   role: { type: String },
   parentId: { type: String, default: "0" },
-});
+  delete: { type: Boolean, default: false },
+},
+  { timestamps: true }
+);
 
 //Export the model
 module.exports = mongoose.model("user", AuthSchema);
