@@ -290,4 +290,22 @@ exports.change_userDetails = async (req, res) => {
   })
 }
 
+exports.get_userByKey = async (req, res) => {
+
+  if (Object.keys(req.body).length === 0) {
+    return res.status(400).send({ error: "Please enter atleast key values pair" });
+  }
+
+  console.log(req.body);
+  Auth.find(req.body, (err, data) => {
+    if (data) {
+      return res.status(200).json({ message: "Successful", data: data });
+    } else {
+      console.log("err", err);
+      return res.status(500).send({ status: 500, err });
+    }
+
+  })
+}
+
 
