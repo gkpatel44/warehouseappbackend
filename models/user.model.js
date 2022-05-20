@@ -12,7 +12,8 @@ let AuthSchema = new Schema({
   status: { type: Boolean },
   statusMsg: { type: String },
   storeId: { type: String, default: "0" },
-  role: { type: String }
+  role: { type: String },
+  parentId: { type: String, default: "0" },
 });
 
 //Export the model
