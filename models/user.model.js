@@ -14,7 +14,7 @@ let AuthSchema = new Schema({
   storeId: { type: String, default: "0" },
   role: { type: String },
   parentId: { type: String, default: "0" },
-  delete: { type: Boolean, default: false },
+  deleteStatus: { type: Boolean, default: false },
 },
   { timestamps: true }
 );

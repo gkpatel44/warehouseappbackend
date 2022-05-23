@@ -279,7 +279,8 @@ exports.change_userDetails = async (req, res) => {
         status: data.status,
         statusMsg: data.statusMsg,
         storeId: data.storeId,
-        role: data.role
+        role: data.role,
+        deleteStatus: data.deleteStatus
       };
       const token = jwt.sign(datas, "secretkey");
 
