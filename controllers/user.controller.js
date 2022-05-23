@@ -260,13 +260,15 @@ exports.change_password = async (req, res) => {
 };
 
 exports.change_userDetails = async (req, res) => {
-  let userId = req.userDetails.user_id;
+  console.log('req.userDetails===========>', req.params.userId);
+  // let userId = req.params.userId;
+  let userId = req.params.userId;
   if (Object.keys(req.body).length === 0) {
     return res.status(400).send({ error: "Please enter atleast one values" });
   }
 
   console.log(req.body);
-  Auth.findOneAndUpdate({ _id: userId }, { $set: req.body }, { useFindAndModify: false }, (err, data) => {
+  Auth.findOneAndUpdate({ _id: userId }, { $set: req.body }, { new: true }, (err, data) => {
     if (data) {
       let datas = {
         user_id: data._id,

@@ -3,7 +3,9 @@ const router = express.Router();
 const auth_controller = require("../controllers/user.controller");
 const verify = require("../middleware/token");
 const upload = require("../middleware/multer");
-
+router.get('/', (req, res) => {
+    return res.send("hello")
+})
 router.post("/signup", upload.single("profile"), auth_controller.signup);
 router.post("/login", auth_controller.login);
 // router.post("/send_otp" ,auth_controller.otpsend);
@@ -12,7 +14,7 @@ router.post("/forgot_password", auth_controller.forgot_password);
 // router.post("/verify_otp" ,auth_controller.verify_otp);
 router.post("/reset_password", verify, auth_controller.reset_password);
 router.put("/change_password", verify, auth_controller.change_password);
-router.put("/change_UserDetails", verify, auth_controller.change_userDetails);
+router.put("/change_UserDetails/:userId", verify, auth_controller.change_userDetails);
 router.post("/get_userByKey", verify, auth_controller.get_userByKey);
 
 
