@@ -27,6 +27,8 @@ exports.getProduct = async (req, res, next) => {
 
 
 }
+
+
 exports.deleteProduct = async (req, res, next) => {
 
 }

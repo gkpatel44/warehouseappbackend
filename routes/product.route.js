@@ -5,8 +5,9 @@ const product_controller = require("../controllers/product.controller");
 
 router.post('/createProduct', product_controller.createProduct);
 router.post('/editProduct', product_controller.editProduct);
-router.post('/deleteProduct', product_controller.deleteProduct);
-router.get('/getProduct', product_controller.getProduct);
+router.delete('/deleteProduct', product_controller.deleteProduct);
+router.post('/getProduct', product_controller.getProduct);
+router.post('/getProduct/:productId', product_controller.getProductByID);
 
 // router.post("/signup", upload.single("profile"), auth_controller.signup);
 // router.post("/login", auth_controller.login);
